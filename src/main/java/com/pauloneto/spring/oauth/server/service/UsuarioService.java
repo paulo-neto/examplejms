@@ -3,8 +3,6 @@ package com.pauloneto.spring.oauth.server.service;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
@@ -25,8 +23,7 @@ import com.pauloneto.spring.oauth.server.util.HashPasswordUtil;
 @Service 
 public class UsuarioService {
 
-	@Inject
-	private Logger logger;
+	protected Logger logger = Logger.getLogger(UsuarioService.class);
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -114,5 +111,10 @@ public class UsuarioService {
 
 	public List<Perfil> consultarPerfisDoUsuario(Long codigoUsuario){
 		return perfilRepository.consultarPerfisDoUsuario(codigoUsuario);
+	}
+
+	@Transactional(readOnly = true)
+	public Usuario buscarPorLoginSenha(String name, String password) {
+		return usuarioRepository.buscarPorLoginSenha(name, password);
 	}
 }

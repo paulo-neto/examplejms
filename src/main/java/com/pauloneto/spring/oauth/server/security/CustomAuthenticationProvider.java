@@ -9,27 +9,25 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
 import com.pauloneto.spring.oauth.server.mesages.KeyMesages;
 import com.pauloneto.spring.oauth.server.mesages.MesagesProperties;
 import com.pauloneto.spring.oauth.server.models.Usuario;
-import com.pauloneto.spring.oauth.server.repository.impl.UsuarioRepository;
+import com.pauloneto.spring.oauth.server.service.UsuarioService;
 import com.pauloneto.spring.oauth.server.util.AssertUtils;
 import com.pauloneto.spring.oauth.server.util.HashPasswordUtil;
 
-@Component
 public class CustomAuthenticationProvider implements AuthenticationProvider{
 	
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioService usuarioService;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String name = authentication.getName();
         String password = authentication.getCredentials().toString();
         password = HashPasswordUtil.generateHash(password);
-        Usuario usuEncontrado = usuarioRepository.buscarPorLoginSenha(name, password);
+        Usuario usuEncontrado = usuarioService.buscarPorLoginSenha(name, password);
         if (!AssertUtils.isEmpty(usuEncontrado)) {
         	Collection<? extends GrantedAuthority> authorities = usuEncontrado.getPerfis();
             return new UsernamePasswordAuthenticationToken(name, password, authorities);

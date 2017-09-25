@@ -15,9 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -38,13 +38,13 @@ public class Usuario implements TO, UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotEmpty(message = "login é obrigatório")
+	@NotNull(message = "login é obrigatório")
 	private String login;
 	
-	@NotEmpty(message = "senha é obrigatório")
+	@NotNull(message = "senha é obrigatório")
 	private String senha;
 	
-	@NotEmpty(message = "email é obrigatório")
+	@NotNull(message = "email é obrigatório")
 	private String email;
 	
 	@JsonIgnore

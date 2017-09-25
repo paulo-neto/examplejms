@@ -8,7 +8,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
@@ -35,11 +34,10 @@ public abstract class GenericRepositoryImpl<T> implements IGenericRepository<T>,
 	 */
 	private static final long serialVersionUID = 6163696283184654122L;
 	
-	@PersistenceContext(unitName = "persistenceUnit")
+	@PersistenceContext(unitName = "springOauthPU")
 	protected EntityManager entityManager;
 
-	@Inject
-	protected Logger logger;
+	protected Logger logger = Logger.getLogger(GenericRepositoryImpl.class);
 	
 	/*
 	 * (non-Javadoc)
